@@ -1,0 +1,36 @@
+﻿@model CourseResultsViewModel
+
+@{
+    ViewData["Title"] = "ShowResult";
+}
+
+<h2>Results for Course: @Model.CourseName</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Trainee</th>
+            <th>Degree</th>
+            <th>minDegree</th>
+            <th>Status</th>
+         
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var result in Model.TraineeResults)
+        {
+            <tr>
+                <td>@result.TraineeName</td>
+                <td>@result.Result</td>
+                <td>@Model.minDegree</td>
+                <td class="@(result.Status == "Passed" ? "text-success fw-bold" : "text-danger fw-bold")">
+                    @result.Status
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+

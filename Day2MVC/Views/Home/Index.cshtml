@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Welcome Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-800 dark:text-white">Welcome back, Admin!</h1>
+        <p class="mt-1 text-slate-500 dark:text-slate-400">Here's a snapshot of what's happening in AcademiaCentral today.</p>
+    </div>
+    <button class="flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
+        <i data-lucide="plus-circle" class="w-5 h-5"></i>
+        <span>Add New</span>
+    </button>
+</div>
+
+<!-- Stats Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <!-- Card 1: Total Instructors -->
+    <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+        <div class="p-4 bg-blue-100 dark:bg-blue-500/10 rounded-full">
+            <i data-lucide="user-check" class="w-8 h-8 text-blue-500 dark:text-blue-400"></i>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Instructors</p>
+            <p class="text-3xl font-bold text-slate-800 dark:text-white">75</p>
+        </div>
+    </div>
+
+    <!-- Card 2: Total Trainees -->
+    <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+        <div class="p-4 bg-green-100 dark:bg-green-500/10 rounded-full">
+            <i data-lucide="users" class="w-8 h-8 text-green-500 dark:text-green-400"></i>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Trainees</p>
+            <p class="text-3xl font-bold text-slate-800 dark:text-white">1,250</p>
+        </div>
+    </div>
+
+    <!-- Card 3: Courses Available -->
+    <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+        <div class="p-4 bg-amber-100 dark:bg-amber-500/10 rounded-full">
+            <i data-lucide="book-marked" class="w-8 h-8 text-amber-500 dark:text-amber-400"></i>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Courses Available</p>
+            <p class="text-3xl font-bold text-slate-800 dark:text-white">128</p>
+        </div>
+    </div>
+
+    <!-- Card 4: Success Rate -->
+    <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+        <div class="p-4 bg-rose-100 dark:bg-rose-500/10 rounded-full">
+            <i data-lucide="trending-up" class="w-8 h-8 text-rose-500 dark:text-rose-400"></i>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Success Rate</p>
+            <p class="text-3xl font-bold text-slate-800 dark:text-white">92.8%</p>
+        </div>
+    </div>
+</div>
+
+<!-- Placeholder for more content like charts or tables -->
+<div class="mt-8 bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+    <h2 class="text-xl font-bold mb-4">Recent Activity</h2>
+    <p class="text-slate-500 dark:text-slate-400">A table or a list of recent activities could go here to make the dashboard more dynamic.</p>
+</div>
+
+<!-- Ensure lucide icons are re-initialized if this view is loaded dynamically -->
+@section Scripts {
+    <script>
+        // This is a good practice in case views are loaded via AJAX.
+        // For a standard MVC load, the main layout script will handle this.
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+}

@@ -1,0 +1,43 @@
+﻿@model TraineeWithResultsVM
+@{
+    ViewData["Title"] = "Show Trainee Results";
+}
+
+<div class="container mt-5">
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-primary">📊 Trainee Results</h1>
+        <p class="text-muted fs-5">Results for <span class="fw-semibold">@Model.TraineeName</span></p>
+    </div>
+
+    <!-- Results Table -->
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-body p-4">
+            <table class="table align-middle table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">📘 Course</th>
+                        <th scope="col">🎯 Degree</th>
+                        <th scope="col">🎯 minDegree</th>
+                        <th scope="col">✅ Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Results)
+                    {
+                        <tr>
+                            <td class="fw-medium">@r.CourseName</td>
+                            <td>@r.Degree</td>
+                            <td>@r.minDegree</td>
+                            <td>
+                                <span class="badge px-3 py-2 rounded-pill @(r.Status == "Passed" ? "bg-success" : "bg-danger")">
+                                    @r.Status
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
