@@ -1,0 +1,153 @@
+﻿@model X.PagedList.IPagedList<Day2MVC.Models.Course>
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-800 dark:text-white">Course Management</h1>
+        <p class="mt-1 text-slate-500 dark:text-slate-400">Browse, add, or manage all available courses.</p>
+    </div>
+    <a asp-action="Create" class="flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
+        <i data-lucide="plus-circle" class="w-5 h-5"></i>
+        <span>Add New Course</span>
+    </a>
+</div>
+
+<div class="mb-6 bg-white dark:bg-slate-800/50 p-4 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+    <form asp-action="Index" method="get" class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div class="sm:col-span-2">
+            <label for="searchString" class="sr-only">Search Courses</label>
+            <div class="relative">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Search by course name..." class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition" />
+            </div>
+        </div>
+        <div>
+            <label for="departmentId" class="sr-only">Filter by Department</label>
+            <select name="departmentId" class="w-full px-4 py-2 bg-slate-100 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition">
+                <option value="">All Departments</option>
+                @foreach (var dept in ViewBag.Departments)
+                {
+                    if (dept.Id == (int?)ViewData["CurrentDept"])
+                    {
+                        <option value="@dept.Id" selected>@dept.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@dept.Id">@dept.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="flex items-end gap-2">
+            <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                <i data-lucide="filter" class="w-5 h-5"></i>
+                <span>Filter</span>
+            </button>
+            <a asp-action="Index" class="p-2.5 bg-slate-200 dark:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600" title="Clear Filters">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </a>
+        </div>
+    </form>
+</div>
+
+
+@if (Model.Any())
+{
+    <div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Course Name</th>
+                        <th scope="col" class="px-6 py-3">Department</th>
+                        <th scope="col" class="px-6 py-3 text-center">Enrolled</th>
+                        <th scope="col" class="px-6 py-3 text-center">Passing Degree</th>
+                        <th scope="col" class="px-6 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var course in Model)
+                    {
+                        <tr class="bg-white dark:bg-slate-800/50 border-b last:border-b-0 border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">
+                                <a asp-action="Details" asp-route-id="@course.Id" class="hover:text-indigo-500 hover:underline">@course.Name</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium text-teal-800 bg-teal-100 rounded-full dark:bg-teal-900/50 dark:text-teal-300">
+                                    @course.Department?.Name
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-center text-slate-500 dark:text-slate-400">
+                                <span class="font-semibold text-slate-700 dark:text-slate-300">@course.CrsResults.Count</span> Trainees
+                            </td>
+                            <td class="px-6 py-4 text-center font-medium">@course.minDegree / @course.Degree</td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="relative" data-controller="dropdown">
+                                    <button type="button" data-action="dropdown#toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full">
+                                        <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                                    </button>
+                                    <div data-dropdown-target="menu" class="hidden absolute right-0 top-full mt-2 w-40 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-10">
+                                        <div class="py-1">
+                                            <a asp-controller="Course" asp-action="Details" asp-route-id="@course.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
+                                                <span>Details</span>
+                                            </a>
+                                            <a asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                            <div class="my-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+                                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                <span>Delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-8 flex justify-center">
+        @Html.PagedListPager(Model,
+                page => Url.Action("Index", new
+                {
+                    page,
+                    searchString = ViewData["CurrentFilter"],
+                    departmentId = ViewData["CurrentDept"]
+                }),
+                new PagedListRenderOptions
+    {
+        ContainerDivClasses = new[] { "flex", "items-center", "justify-center" },
+        UlElementClasses = new[] { "inline-flex", "items-center", "-space-x-px", "text-sm" },
+        LiElementClasses = new[] { "" },
+        PageClasses = new[] { "flex", "items-center", "justify-center", "px-3", "h-8", "leading-tight", "text-slate-500", "bg-white", "border", "border-slate-300", "hover:bg-slate-100", "hover:text-slate-700", "dark:bg-slate-800", "dark:border-slate-700", "dark:text-slate-400", "dark:hover:bg-slate-700", "dark:hover:text-white" },
+        ActiveLiElementClass = "z-10 flex items-center justify-center px-3 h-8 text-indigo-600 border border-indigo-300 bg-indigo-50 hover:bg-indigo-100 hover:text-indigo-700 dark:border-slate-700 dark:bg-slate-700 dark:text-white",
+        LinkToPreviousPageFormat = "‹ Prev",
+        LinkToNextPageFormat = "Next ›",
+        LinkToFirstPageFormat = "« First",
+        LinkToLastPageFormat = "Last »",
+    })
+    </div>
+}
+else
+{
+    <div class="text-center py-20 px-6 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+        <i data-lucide="search-x" class="mx-auto w-16 h-16 text-slate-400 dark:text-slate-500"></i>
+        <h3 class="mt-4 text-xl font-semibold text-slate-800 dark:text-white">No Courses Found</h3>
+        <p class="mt-2 text-slate-500 dark:text-slate-400">Try adjusting your search or filter criteria.</p>
+        <a asp-action="Index" class="mt-4 inline-block text-indigo-500 hover:underline">Clear all filters</a>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_DropdownScript" />
+}

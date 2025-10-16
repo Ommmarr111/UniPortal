@@ -1,0 +1,34 @@
+﻿<script>
+    // This script is now reusable for any page that has the dropdowns.
+    document.addEventListener('DOMContentLoaded', () => {
+        const dropdownControllers = document.querySelectorAll('[data-controller="dropdown"]');
+
+        dropdownControllers.forEach(controller => {
+            const toggleButton = controller.querySelector('[data-action="dropdown#toggle"]');
+            const menu = controller.querySelector('[data-dropdown-target="menu"]');
+
+            toggleButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevents the document click from firing immediately
+
+                // Close all other dropdowns before opening the new one
+                document.querySelectorAll('[data-dropdown-target="menu"]').forEach(otherMenu => {
+                    if (otherMenu !== menu) {
+                        otherMenu.classList.add('hidden');
+                    }
+                });
+
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        // Add a single event listener to the document to close dropdowns
+        document.addEventListener('click', (event) => {
+            dropdownControllers.forEach(controller => {
+                if (!controller.contains(event.target)) {
+                    const menu = controller.querySelector('[data-dropdown-target="menu"]');
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+    });
+</script>

@@ -1,38 +1,98 @@
 ﻿@model TraineeWithResultsVM
+
 @{
-    ViewData["Title"] = "Show Trainee Results";
+    ViewData["Title"] = $"Results for {Model.TraineeName}";
+
+    // --- Calculations for the summary cards ---
+    var totalCourses = Model.Results.Count();
+    var passedCourses = Model.Results.Count(r => r.Status == "Passed");
+    var passRate = totalCourses > 0 ? (int)Math.Round((double)passedCourses / totalCourses * 100) : 0;
 }
 
-<div class="container mt-5">
-    <!-- Page Header -->
-    <div class="text-center mb-4">
-        <h1 class="fw-bold text-primary">📊 Trainee Results</h1>
-        <p class="text-muted fs-5">Results for <span class="fw-semibold">@Model.TraineeName</span></p>
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-800 dark:text-white">Course Results</h1>
+        <p class="mt-1 text-slate-500 dark:text-slate-400">
+            Academic performance overview for <span class="font-medium text-indigo-500 dark:text-indigo-400">@Model.TraineeName</span>.
+        </p>
+    </div>
+    <a asp-controller="Trainee" asp-action="Index" class="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        <span>Back to Trainees</span>
+    </a>
+</div>
+
+@if (Model.Results.Any())
+{
+    <!-- Summary Stat Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Total Courses Card -->
+        <div class="p-6 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+            <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-500/10">
+                <i data-lucide="book-copy" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Total Courses</p>
+                <p class="text-2xl font-bold text-slate-800 dark:text-white">@totalCourses</p>
+            </div>
+        </div>
+        <!-- Passed Courses Card -->
+        <div class="p-6 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+            <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-500/10">
+                <i data-lucide="award" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Passed Courses</p>
+                <p class="text-2xl font-bold text-slate-800 dark:text-white">@passedCourses</p>
+            </div>
+        </div>
+        <!-- Pass Rate Card -->
+        <div class="p-6 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
+            <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-500/10">
+                <i data-lucide="trending-up" class="w-6 h-6 text-indigo-600 dark:text-indigo-400"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Pass Rate</p>
+                <p class="text-2xl font-bold text-slate-800 dark:text-white">@passRate%</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Results Table -->
-    <div class="card shadow-lg border-0 rounded-3">
-        <div class="card-body p-4">
-            <table class="table align-middle table-hover">
-                <thead class="table-primary">
+    <!-- Results Table Card -->
+    <div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50">
                     <tr>
-                        <th scope="col">📘 Course</th>
-                        <th scope="col">🎯 Degree</th>
-                        <th scope="col">🎯 minDegree</th>
-                        <th scope="col">✅ Status</th>
+                        <th scope="col" class="px-6 py-3">Course Name</th>
+                        <th scope="col" class="px-6 py-3 text-center">Your Degree</th>
+                        <th scope="col" class="px-6 py-3 text-center">Passing Degree</th>
+                        <th scope="col" class="px-6 py-3 text-center">Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var r in Model.Results)
                     {
-                        <tr>
-                            <td class="fw-medium">@r.CourseName</td>
-                            <td>@r.Degree</td>
-                            <td>@r.minDegree</td>
-                            <td>
-                                <span class="badge px-3 py-2 rounded-pill @(r.Status == "Passed" ? "bg-success" : "bg-danger")">
-                                    @r.Status
-                                </span>
+                        <tr class="bg-white dark:bg-slate-800/50 border-b last:border-b-0 border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">@r.CourseName</td>
+                            <td class="px-6 py-4 text-center font-semibold @(r.Status == "Passed" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400")">@r.Degree</td>
+                            <td class="px-6 py-4 text-center text-slate-500 dark:text-slate-400">@r.minDegree</td>
+                            <td class="px-6 py-4 text-center">
+                                @if (r.Status == "Passed")
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900/50 dark:text-green-300">
+                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                        Passed
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-red-800 bg-red-100 rounded-full dark:bg-red-900/50 dark:text-red-300">
+                                        <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                                        Failed
+                                    </span>
+                                }
                             </td>
                         </tr>
                     }
@@ -40,4 +100,13 @@
             </table>
         </div>
     </div>
-</div>
+}
+else
+{
+    <!-- Empty State for No Results -->
+    <div class="text-center py-20 px-6 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+        <i data-lucide="file-question" class="mx-auto w-16 h-16 text-slate-400 dark:text-slate-500"></i>
+        <h3 class="mt-4 text-xl font-semibold text-slate-800 dark:text-white">No Results Found</h3>
+        <p class="mt-2 text-slate-500 dark:text-slate-400">There are no course results recorded for @Model.TraineeName yet.</p>
+    </div>
+}

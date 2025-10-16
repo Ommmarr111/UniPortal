@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\.NET ITI 24\\Day2MVC\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\trainee\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\views\\trainee\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\controllers\\traineecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\controllers\\traineecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 228,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,6 +43,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Trainee\\Details.cshtml",
+              "RelativeDocumentMoniker": "UniPortal\\Views\\Trainee\\Details.cshtml",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Trainee\\Details.cshtml",
+              "RelativeToolTip": "UniPortal\\Views\\Trainee\\Details.cshtml",
+              "ViewState": "AgIAAJgAAAAAAAAAAADwv5kAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-16T23:29:54.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TraineeController.cs",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\TraineeController.cs",
+              "RelativeDocumentMoniker": "UniPortal\\Controllers\\TraineeController.cs",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\TraineeController.cs",
+              "RelativeToolTip": "UniPortal\\Controllers\\TraineeController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAADwv0gAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T23:27:30.95Z",
+              "EditorCaption": ""
             }
           ]
         }

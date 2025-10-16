@@ -5,7 +5,6 @@
     ViewData["Title"] = "Trainees";
 }
 
-<!-- Page Header -->
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
     <div>
         <h1 class="text-3xl font-bold text-slate-800 dark:text-white">Trainee Management</h1>
@@ -17,76 +16,141 @@
     </a>
 </div>
 
-<!-- Trainees Table Card -->
-<div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left">
-            <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">Trainee</th>
-                    <th scope="col" class="px-6 py-3">Department</th>
-                    <th scope="col" class="px-6 py-3">Grade</th>
-                    <th scope="col" class="px-6 py-3">Address</th>
-                    <th scope="col" class="px-6 py-3 text-right">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var trainee in Model)
-                {
-                    <tr class="bg-white dark:bg-slate-800/50 border-b last:border-b-0 border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                        <th scope="row" class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">
-                            <div class="flex items-center gap-4">
-                                @if (!string.IsNullOrEmpty(trainee.Image))
+@if (Model.Any())
+{
+    <div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+                <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Trainee</th>
+                        <th scope="col" class="px-6 py-3">Department</th>
+                        <th scope="col" class="px-6 py-3">Grade</th>
+                        <th scope="col" class="px-6 py-3">Address</th>
+                        <th scope="col" class="px-6 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var trainee in Model)
+                    {
+                        <tr class="bg-white dark:bg-slate-800/50 border-b last:border-b-0 border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <th scope="row" class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">
+                                <div class="flex items-center gap-4">
+                                    @if (!string.IsNullOrEmpty(trainee.Image))
+                                    {
+                                        <img class="w-12 h-12 rounded-full object-cover"
+                                             src="~/images/@trainee.Image"
+                                             alt="@trainee.Name image"
+                                             onerror="this.onerror=null; this.src='https://placehold.co/100x100/e2e8f0/64748b?text=@trainee.Name.FirstOrDefault()';">
+                                    }
+                                    else
+                                    {
+                                        <div class="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">
+                                            @trainee.Name.FirstOrDefault()
+                                        </div>
+                                    }
+                                    <span>@trainee.Name</span>
+                                </div>
+                            </th>
+                            <td class="px-6 py-4">
+                                @if (!string.IsNullOrEmpty(trainee.Department?.Name))
                                 {
-                                    <img class="w-12 h-12 rounded-full object-cover"
-                                         src="~/images/@trainee.Image"
-                                         alt="@trainee.Name image"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/100x100/e2e8f0/64748b?text=@trainee.Name.FirstOrDefault()';">
+                                    <span class="px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full dark:bg-purple-900/50 dark:text-purple-300">@trainee.Department.Name</span>
                                 }
                                 else
                                 {
-                                    <div class="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">
-                                        @trainee.Name.FirstOrDefault()
-                                    </div>
+                                    <span class="text-slate-400 italic">N/A</span>
                                 }
-                                <span>@trainee.Name</span>
-                            </div>
-                        </th>
-                        <td class="px-6 py-4">
-                            @if (!string.IsNullOrEmpty(trainee.Department?.Name))
-                            {
-                                <span class="px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full dark:bg-purple-900/50 dark:text-purple-300">@trainee.Department.Name</span>
-                            }
-                            else
-                            {
-                                <span class="text-slate-400 italic">N/A</span>
-                            }
-                        </td>
-                        <td class="px-6 py-4 font-medium text-slate-700 dark:text-slate-300">@trainee.Grade</td>
-                        <td class="px-6 py-4 text-slate-500 dark:text-slate-400">@trainee.Address</td>
-                        <td class="px-6 py-4 text-right">
-                            <div class="flex items-center justify-end gap-2">
-                                <a asp-action="Edit" asp-route-id="@trainee.Id" class="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">Edit</a>
-                                <span class="text-slate-300 dark:text-slate-600">|</span>
-                                <a asp-action="Details" asp-route-id="@trainee.Id" class="font-medium text-slate-600 dark:text-slate-400 hover:underline">Details</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            </td>
+                            <td class="px-6 py-4 font-medium text-slate-700 dark:text-slate-300">@trainee.Grade</td>
+                            <td class="px-6 py-4 text-slate-500 dark:text-slate-400">@trainee.Address</td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="relative" data-controller="dropdown">
+                                    <button type="button" data-action="dropdown#toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full">
+                                        <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                                    </button>
+                                    <div data-dropdown-target="menu" class="hidden absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-10">
+                                        <div class="py-1">
+                                            <a asp-controller="Trainee" asp-action="TraineeResult" asp-route-id="@trainee.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="file-text" class="w-4 h-4"></i>
+                                                <span>View Results</span>
+                                            </a>
+                                            <a asp-controller="Trainee" asp-action="Details" asp-route-id="@trainee.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="user" class="w-4 h-4"></i>
+                                                <span>Details</span>
+                                            </a>
+                                            <div class="my-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+                                            <a asp-controller="Trainee" asp-action="Edit" asp-route-id="@trainee.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-indigo-600 dark:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                            <a asp-controller="Trainee" asp-action="Delete" asp-route-id="@trainee.Id" class="flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                <span>Delete</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<!-- Pagination -->
-<div class="mt-6">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+    <div class="mt-6">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
 {
     UlElementClasses = new[] { "flex", "items-center", "justify-center", "space-x-1" },
     LiElementClasses = new[] { "rounded-lg" },
     PageClasses = new[] { "block", "px-4", "py-2", "text-slate-600", "bg-white", "dark:bg-slate-800", "dark:text-slate-300", "hover:bg-indigo-50", "dark:hover:bg-slate-700", "transition-colors" },
-    ActiveLiElementClass = "bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-white",
+    ActiveLiElementClass = "bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-white font-bold",
     LinkToPreviousPageFormat = "Previous",
     LinkToNextPageFormat = "Next",
 })
-</div>
+    </div>
+}
+else
+{
+    <div class="text-center py-20 px-6 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+        <i data-lucide="users" class="mx-auto w-16 h-16 text-slate-400 dark:text-slate-500"></i>
+        <h3 class="mt-4 text-xl font-semibold text-slate-800 dark:text-white">No Trainees Found</h3>
+        <p class="mt-2 text-slate-500 dark:text-slate-400">Get started by adding your first trainee record.</p>
+        <div class="mt-6">
+            <a asp-action="Create" class="flex items-center justify-center gap-2 max-w-xs mx-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">
+                <i data-lucide="user-plus" class="w-5 h-5"></i>
+                <span>Add First Trainee</span>
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        // Simple script to toggle the dropdowns. Uses a lightweight JS framework concept.
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownControllers = document.querySelectorAll('[data-controller="dropdown"]');
+
+            dropdownControllers.forEach(controller => {
+                const toggleButton = controller.querySelector('[data-action="dropdown#toggle"]');
+                const menu = controller.querySelector('[data-dropdown-target="menu"]');
+
+                toggleButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    menu.classList.toggle('hidden');
+                });
+            });
+
+            // Close dropdowns if clicking outside
+            document.addEventListener('click', (event) => {
+                dropdownControllers.forEach(controller => {
+                    const menu = controller.querySelector('[data-dropdown-target="menu"]');
+                    if (!controller.contains(event.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+}

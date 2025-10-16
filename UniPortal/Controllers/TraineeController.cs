@@ -1,6 +1,7 @@
 ﻿using Day2MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UniPortal.Models;
 using X.PagedList.Extensions;
 
 namespace Day2MVC.Controllers
@@ -13,26 +14,30 @@ namespace Day2MVC.Controllers
         {
             this.context = context;
         }
+
         public IActionResult ShowResult(int id, int crsId)
         {
-            var trainee = context.Trainees.Include(r => r.CrsResults).FirstOrDefault(tr => tr.Id == id);
-            if (trainee != null)
+            var courseResult = context.CrsResults
+                .Include(cr => cr.Trainee)
+                .Include(cr => cr.Course)
+                .FirstOrDefault(cr => cr.TraineeId == id && cr.CourseId == crsId);
+
+            // 3. Use NotFound() for better error handling
+            if (courseResult == null)
             {
-                ViewBag.CourseResult = trainee.CrsResults.FirstOrDefault(r => r.CourseId == crsId);
-                if (ViewBag.CourseResult != null)
-                {
-                    return View("ShowResult", trainee);
-                }
-                else
-                {
-                    return Content("Result not found for the specified course.");
-                }
-            }
-            else
-            {
-                return Content("Trainee not found.");
+                return NotFound("The specified result for this trainee and course was not found.");
             }
 
+            // 2. Use a strongly-typed ViewModel instead of ViewBag
+            var viewModel = new TraineeCourseResultVM
+            {
+                TraineeName = courseResult.Trainee.Name,
+                CourseName = courseResult.Course.Name,
+                Degree = courseResult.Degree,
+                IsPassing = courseResult.Degree >= courseResult.Course.minDegree
+            };
+
+            return View("ShowResult", viewModel);
         }
 
         public IActionResult TraineeResult(int id)
@@ -62,6 +67,28 @@ namespace Day2MVC.Controllers
 
             return View("ShowTraineeResults", vm);
         }
+
+        // GET: Trainee/Details/5
+        public IActionResult Details(int id)
+        {
+            // Find the trainee by their ID.
+            // We must .Include() the related data that we want to display in the view.
+            // We also use .ThenInclude() to get the Course name from the CrsResult.
+            var trainee = context.Trainees
+                .Include(t => t.Department)
+                .Include(t => t.CrsResults)
+                    .ThenInclude(cr => cr.Course)
+                .FirstOrDefault(t => t.Id == id);
+
+            // If no trainee is found with that ID, return a 404 Not Found error.
+            if (trainee == null)
+            {
+                return NotFound();
+            }
+
+            // Pass the found trainee object to the view.
+            return View(trainee);
+        }
         public IActionResult Index(int? page)
         {
             int pageNumber = page ?? 1;   // default page = 1
@@ -74,5 +101,43 @@ namespace Day2MVC.Controllers
 
             return View(trainees); // this will be IPagedList<Instructor>
         }
+
+        // GET: /Trainee/Create
+        public IActionResult Create()
+        {
+            ViewBag.Departments = context.Departments.ToList();
+            // We don't need to pass a model, the view will create an empty form
+            return View();
+        }
+
+        // POST: /Trainee/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // The parameter is now the ViewModel
+        public IActionResult Create(CreateTraineeViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // Manually map the data from the ViewModel to a new Trainee entity
+                var newTrainee = new Trainee
+                {
+                    Name = viewModel.Name,
+                    Address = viewModel.Address,
+                    Image = viewModel.Image,
+                    Grade = viewModel.Grade,
+                    DepartmentId = viewModel.DepartmentId
+                };
+
+                context.Trainees.Add(newTrainee);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            // If validation fails, repopulate the dropdown and return the view
+            ViewBag.Departments = context.Departments.ToList();
+            return View(viewModel);
+        }
+
     }
 }
+

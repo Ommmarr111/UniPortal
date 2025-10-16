@@ -1,0 +1,187 @@
+﻿@model Day2MVC.Models.Trainee
+
+@{
+    ViewData["Title"] = $"Dashboard for {Model.Name}";
+
+    // --- Calculations for the Dashboard ---
+    var totalCourses = Model.CrsResults.Count();
+    var passedCourses = Model.CrsResults.Count(cr => cr.Degree >= cr.Course.minDegree);
+    var passRate = totalCourses > 0 ? (double)passedCourses / totalCourses : 0;
+    var averageScore = totalCourses > 0 ? Model.CrsResults.Average(cr => cr.Degree) : 0;
+
+    // For the SVG Donut Chart
+    var circumference = 2 * Math.PI * 45; // 2 * pi * radius
+    var strokeOffset = circumference * (1 - passRate);
+}
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800 dark:text-white">@Model.Name</h1>
+        <p class="mt-1 text-slate-500 dark:text-slate-400">Performance Dashboard & Academic Record</p>
+    </div>
+    <div class="flex items-center gap-2">
+        <a asp-action="Index" class="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <span>Back to List</span>
+        </a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+            <i data-lucide="edit" class="w-5 h-5"></i>
+            <span>Edit</span>
+        </a>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-1">
+        <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+            <div class="text-center">
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <img class="w-32 h-32 rounded-full object-cover mx-auto ring-4 ring-indigo-200 dark:ring-indigo-500/50" src="@Model.Image" alt="@Model.Name image" onerror="this.onerror=null; this.src='https://placehold.co/128x128/e2e8f0/64748b?text=@Model.Name.FirstOrDefault()';">
+                }
+                else
+                {
+                    <div class="w-32 h-32 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center mx-auto ring-4 ring-indigo-200 dark:ring-indigo-500/50">
+                        <span class="text-5xl font-bold text-slate-500">@Model.Name.FirstOrDefault()</span>
+                    </div>
+                }
+                <h2 class="mt-4 text-xl font-bold text-slate-800 dark:text-white">@Model.Name</h2>
+                <p class="text-slate-500 dark:text-slate-400">@Model.Department?.Name</p>
+            </div>
+
+            <hr class="my-6 border-t border-slate-200 dark:border-slate-700" />
+
+            <div>
+                <dl class="space-y-4 text-left">
+                    <div>
+                        <dt class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+                            <i data-lucide="star" class="w-4 h-4 mr-2"></i>
+                            Grade
+                        </dt>
+                        <dd class="mt-1 text-slate-900 dark:text-white font-semibold">@Model.Grade</dd>
+                    </div>
+                    <div>
+                        <dt class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                            Address
+                        </dt>
+                        <dd class="mt-1 text-slate-900 dark:text-white">@Model.Address</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-2">
+        <div class="border-b border-slate-200 dark:border-slate-700">
+            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                <button class="tab-button active group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+                    <i data-lucide="pie-chart" class="-ml-0.5 mr-2 h-5 w-5"></i>
+                    <span>Overview</span>
+                </button>
+                <button class="tab-button group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm">
+                    <i data-lucide="book-open" class="-ml-0.5 mr-2 h-5 w-5"></i>
+                    <span>Course Results</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="mt-6">
+            <div class="tab-panel">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex flex-col items-center justify-center">
+                        <h3 class="font-semibold text-slate-800 dark:text-white mb-4">Overall Pass Rate</h3>
+                        <div class="relative w-40 h-40">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <circle class="text-slate-200 dark:text-slate-700" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" />
+                                <circle class="text-indigo-500" stroke-width="10" stroke-dasharray="@circumference" stroke-dashoffset="@strokeOffset" stroke-linecap="round" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" style="transform: rotate(-90deg); transform-origin: 50% 50%;" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-3xl font-bold text-slate-800 dark:text-white">@passRate.ToString("P0")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+                            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Courses Taken</p>
+                            <p class="text-3xl font-bold text-slate-800 dark:text-white">@totalCourses</p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+                            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Average Score</p>
+                            <p class="text-3xl font-bold text-slate-800 dark:text-white">@averageScore.ToString("N1") / 100</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-panel hidden">
+                <div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+                    @if (Model.CrsResults.Any())
+                    {
+                        <ul role="list" class="divide-y divide-slate-200 dark:divide-slate-700">
+                            @foreach (var result in Model.CrsResults)
+                            {
+                                var scorePercent = (double)result.Degree / result.Course.Degree * 100;
+                                var passed = result.Degree >= result.Course.minDegree;
+
+                                <li class="p-4 sm:p-6">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm font-medium text-indigo-600 dark:text-indigo-400 truncate">@result.Course.Name</p>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium @(passed ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300" : "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300")">
+                                            @(passed ? "Passed" : "Failed")
+                                        </span>
+                                    </div>
+                                    <div class="mt-2 sm:flex sm:justify-between">
+                                        <div class="sm:flex">
+                                            <p class="flex items-center text-sm text-slate-500 dark:text-slate-400">
+                                                Score: @result.Degree / @result.Course.Degree
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 mt-3">
+                                        <div class="h-2 rounded-full @(passed ? "bg-green-500" : "bg-red-500")" style="width: @scorePercent%"></div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="text-center py-10 px-6">
+                            <i data-lucide="file-question" class="mx-auto w-12 h-12 text-slate-400 dark:text-slate-500"></i>
+                            <h3 class="mt-2 text-md font-semibold text-slate-800 dark:text-white">No Results Found</h3>
+                            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">This trainee has no course results yet.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-button');
+            const panels = document.querySelectorAll('.tab-panel');
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.add('hidden'));
+                    tab.classList.add('active');
+                    panels[index].classList.remove('hidden');
+                });
+            });
+
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .tab-button.active { border-color: #6366f1; color: #6366f1; }
+                .dark .tab-button.active { color: #a5b4fc; border-color: #a5b4fc; }
+                .tab-button { border-color: transparent; color: #64748b; }
+                .dark .tab-button { color: #94a3b8; }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+}
