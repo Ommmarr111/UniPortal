@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\.NET ITI 24\\Day2MVC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,8 +15,24 @@
       "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\course\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\views\\course\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\course\\showdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\views\\course\\showdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|solutionrelative:uniportal\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{108652BE-73B8-4797-8022-5E31CACA459D}|UniPortal\\UniPortal.csproj|d:\\.net iti 24\\day2mvc\\uniportal\\views\\trainee\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -30,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 228,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,59 +78,124 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "UniPortal\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\HomeController.cs*",
-              "RelativeToolTip": "UniPortal\\Controllers\\HomeController.cs*",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAswCEAAAAuAAAAAAAAAA==",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "UniPortal\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAmwDAAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:38:15.231Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DashboardViewModel.cs",
-              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Models\\DashboardViewModel.cs",
-              "RelativeDocumentMoniker": "UniPortal\\Models\\DashboardViewModel.cs",
-              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Models\\DashboardViewModel.cs",
-              "RelativeToolTip": "UniPortal\\Models\\DashboardViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:37:49.571Z",
+              "WhenOpened": "2025-10-17T12:40:24.266Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Models\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "UniPortal\\Models\\DashboardViewModel.cs",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Models\\DashboardViewModel.cs",
+              "RelativeToolTip": "UniPortal\\Models\\DashboardViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T12:39:45.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "UniPortal\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "UniPortal\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAqwE4AAAA5AAAAAAAAAA==",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Home\\Index.cshtml*",
+              "RelativeToolTip": "UniPortal\\Views\\Home\\Index.cshtml*",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAuwHwAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-16T23:36:03.964Z",
+              "WhenOpened": "2025-10-17T12:38:27.004Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Course\\Index.cshtml",
+              "RelativeDocumentMoniker": "UniPortal\\Views\\Course\\Index.cshtml",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Course\\Index.cshtml",
+              "RelativeToolTip": "UniPortal\\Views\\Course\\Index.cshtml",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAuwF4AAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-17T12:33:46.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Course\\Details.cshtml",
+              "RelativeDocumentMoniker": "UniPortal\\Views\\Course\\Details.cshtml",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Course\\Details.cshtml",
+              "RelativeToolTip": "UniPortal\\Views\\Course\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-17T12:33:45.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Course.cs",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "UniPortal\\Models\\Course.cs",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Models\\Course.cs",
+              "RelativeToolTip": "UniPortal\\Models\\Course.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAuwBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T12:32:23.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ShowDetails.cshtml",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Course\\ShowDetails.cshtml",
+              "RelativeDocumentMoniker": "UniPortal\\Views\\Course\\ShowDetails.cshtml",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Course\\ShowDetails.cshtml",
+              "RelativeToolTip": "UniPortal\\Views\\Course\\ShowDetails.cshtml",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAswGAAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-17T12:31:53.334Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "UniPortal\\Controllers\\CourseController.cs",
+              "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "UniPortal\\Controllers\\CourseController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAowBoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-17T12:29:48.881Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Details.cshtml",
               "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Trainee\\Details.cshtml",
               "RelativeDocumentMoniker": "UniPortal\\Views\\Trainee\\Details.cshtml",
               "ToolTip": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Views\\Trainee\\Details.cshtml",
               "RelativeToolTip": "UniPortal\\Views\\Trainee\\Details.cshtml",
-              "ViewState": "AgIAAJgAAAAAAAAAAADwv7oAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAJIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-16T23:29:54.384Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "TraineeController.cs",
               "DocumentMoniker": "D:\\.NET ITI 24\\Day2MVC\\UniPortal\\Controllers\\TraineeController.cs",
               "RelativeDocumentMoniker": "UniPortal\\Controllers\\TraineeController.cs",
@@ -118,8 +203,7 @@
               "RelativeToolTip": "UniPortal\\Controllers\\TraineeController.cs",
               "ViewState": "AgIAADgAAAAAAAAAAADwv0gAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T23:27:30.95Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T23:27:30.95Z"
             }
           ]
         }

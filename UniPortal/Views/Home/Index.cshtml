@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Dashboard";
+
+    var maxTrainees = Model.TraineesPerDepartment.Any() ? Model.TraineesPerDepartment.Max(d => d.TraineeCount) : 1;
 }
 
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -13,99 +15,111 @@
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
-        <div class="p-4 bg-blue-100 dark:bg-blue-500/10 rounded-full">
-            <i data-lucide="user-check" class="w-8 h-8 text-blue-500 dark:text-blue-400"></i>
-        </div>
-        <div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Instructors</p>
-            <p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.TotalInstructors</p>
-        </div>
+        <div class="p-4 bg-blue-100 dark:bg-blue-500/10 rounded-full"><i data-lucide="user-check" class="w-8 h-8 text-blue-500 dark:text-blue-400"></i></div>
+        <div><p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Instructors</p><p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.TotalInstructors</p></div>
     </div>
-
     <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
-        <div class="p-4 bg-green-100 dark:bg-green-500/10 rounded-full">
-            <i data-lucide="users" class="w-8 h-8 text-green-500 dark:text-green-400"></i>
-        </div>
-        <div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Trainees</p>
-            <p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.TotalTrainees.ToString("N0")</p>
-        </div>
+        <div class="p-4 bg-green-100 dark:bg-green-500/10 rounded-full"><i data-lucide="users" class="w-8 h-8 text-green-500 dark:text-green-400"></i></div>
+        <div><p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Trainees</p><p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.TotalTrainees.ToString("N0")</p></div>
     </div>
-
     <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
-        <div class="p-4 bg-amber-100 dark:bg-amber-500/10 rounded-full">
-            <i data-lucide="book-marked" class="w-8 h-8 text-amber-500 dark:text-amber-400"></i>
-        </div>
-        <div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Courses Available</p>
-            <p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.TotalCourses</p>
-        </div>
+        <div class="p-4 bg-amber-100 dark:bg-amber-500/10 rounded-full"><i data-lucide="book-marked" class="w-8 h-8 text-amber-500 dark:text-amber-400"></i></div>
+        <div><p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Courses Available</p><p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.TotalCourses</p></div>
     </div>
-
     <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50 flex items-center gap-6">
-        <div class="p-4 bg-rose-100 dark:bg-rose-500/10 rounded-full">
-            <i data-lucide="trending-up" class="w-8 h-8 text-rose-500 dark:text-rose-400"></i>
-        </div>
-        <div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Success Rate</p>
-            <p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.SuccessRate.ToString("F1")%</p>
-        </div>
+        <div class="p-4 bg-rose-100 dark:bg-rose-500/10 rounded-full"><i data-lucide="trending-up" class="w-8 h-8 text-rose-500 dark:text-rose-400"></i></div>
+        <div><p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Success Rate</p><p class="text-3xl font-bold text-slate-800 dark:text-white">@Model.SuccessRate.ToString("F1")%</p></div>
     </div>
 </div>
 
-<div class="mt-8 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
-    <div class="p-6">
-        <h2 class="text-xl font-bold text-slate-800 dark:text-white">Recent Activity</h2>
-        <p class="text-sm text-slate-500 dark:text-slate-400">The latest course results submitted to the system.</p>
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+        <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white">Trainee Distribution</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Number of trainees per department.</p>
+        </div>
+        <div class="p-6 space-y-4">
+            @foreach (var dept in Model.TraineesPerDepartment)
+            {
+                var percentage = (double)dept.TraineeCount / maxTrainees * 100;
+                <div class="space-y-1">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="font-medium text-slate-600 dark:text-slate-300">@dept.DepartmentName</span>
+                        <span class="font-semibold text-slate-800 dark:text-white">@dept.TraineeCount</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
+                        <div class="bg-indigo-500 h-2.5 rounded-full" style="width: @percentage%"></div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 
-    @if (Model.RecentActivity.Any())
-    {
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left">
-                <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">Trainee</th>
-                        <th scope="col" class="px-6 py-3">Course</th>
-                        <th scope="col" class="px-6 py-3 text-center">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var activity in Model.RecentActivity)
-                    {
-                        <tr class="bg-white dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-700/50">
-                            <td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">
-                                <a asp-controller="Trainee" asp-action="Details" asp-route-id="@activity.TraineeId" class="hover:text-indigo-500 hover:underline">
-                                    @activity.TraineeName
-                                </a>
-                            </td>
-                            <td class="px-6 py-4 text-slate-500 dark:text-slate-400">@activity.CourseName</td>
-                            <td class="px-6 py-4 text-center">
-                                @if (activity.Passed)
-                                {
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900/50 dark:text-green-300">
-                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Passed
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-red-800 bg-red-100 rounded-full dark:bg-red-900/50 dark:text-red-300">
-                                        <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Failed
-                                    </span>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    <div class="lg:col-span-1">
+        <div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-4">Quick Actions</h2>
+                <div class="space-y-3">
+                    <a asp-controller="Trainee" asp-action="Create" class="w-full flex items-center gap-3 p-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                        <i data-lucide="user-plus" class="w-5 h-5 text-indigo-500"></i>
+                        <span class="font-semibold text-slate-700 dark:text-slate-200">Add New Trainee</span>
+                    </a>
+                    <a asp-controller="Course" asp-action="Create" class="w-full flex items-center gap-3 p-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700/50 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-amber-500"></i>
+                        <span class="font-semibold text-slate-700 dark:text-slate-200">Add New Course</span>
+                    </a>
+                </div>
+            </div>
+
+            <hr class="border-t border-slate-200 dark:border-slate-700" />
+
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white">Recent Activity</h2>
+            </div>
+            @if (Model.RecentActivity.Any())
+            {
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50 sr-only">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Trainee</th>
+                                <th scope="col" class="px-6 py-3">Course</th>
+                                <th scope="col" class="px-6 py-3 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            @foreach (var activity in Model.RecentActivity)
+                            {
+                                <tr class="bg-white dark:bg-slate-800/50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a asp-controller="Trainee" asp-action="Details" asp-route-id="@activity.TraineeId" class="hover:text-indigo-500 hover:underline font-medium text-slate-900 dark:text-white">
+                                            @activity.TraineeName
+                                        </a>
+                                        <div class="text-slate-500 dark:text-slate-400">@activity.CourseName</div>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        @if (activity.Passed)
+                                        {
+                                            <span class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900/50 dark:text-green-300">Passed</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-red-800 bg-red-100 rounded-full dark:bg-red-900/50 dark:text-red-300">Failed</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-10 px-6 border-t border-slate-200 dark:border-slate-700/50">
+                    <i data-lucide="inbox" class="mx-auto w-12 h-12 text-slate-400 dark:text-slate-500"></i>
+                    <h3 class="mt-2 text-md font-semibold text-slate-800 dark:text-white">No Recent Activity</h3>
+                </div>
+            }
         </div>
-    }
-    else
-    {
-        <div class="text-center py-10 px-6 border-t border-slate-200 dark:border-slate-700/50">
-            <i data-lucide="inbox" class="mx-auto w-12 h-12 text-slate-400 dark:text-slate-500"></i>
-            <h3 class="mt-2 text-md font-semibold text-slate-800 dark:text-white">No Recent Activity</h3>
-            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">As new course results are added, they will appear here.</p>
-        </div>
-    }
+    </div>
 </div>

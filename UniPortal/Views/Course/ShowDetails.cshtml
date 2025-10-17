@@ -1,0 +1,117 @@
+﻿@model Day2MVC.Models.Course
+
+@{
+    ViewData["Title"] = $"Details for {Model.Name}";
+}
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-800 dark:text-white">@Model.Name</h1>
+        <p class="mt-1 text-slate-500 dark:text-slate-400">Detailed information, instructors, and enrolled trainees.</p>
+    </div>
+    <div class="flex items-center gap-2">
+        <a asp-action="Index" class="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <span>Back to List</span>
+        </a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+            <i data-lucide="edit" class="w-5 h-5"></i>
+            <span>Edit</span>
+        </a>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-1 space-y-8">
+        <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+            <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-4 border-b border-slate-200 dark:border-slate-700 pb-3">Course Details</h3>
+            <dl class="space-y-4">
+                <div>
+                    <dt class="text-sm font-medium text-slate-500 dark:text-slate-400">Department</dt>
+                    <dd class="mt-1 text-slate-900 dark:text-white font-semibold">@Model.Department?.Name</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500 dark:text-slate-400">Credit Hours</dt>
+                    <dd class="mt-1 text-slate-900 dark:text-white">@Model.Hours</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-slate-500 dark:text-slate-400">Degree</dt>
+                    <dd class="mt-1 text-slate-900 dark:text-white">@Model.minDegree (Passing) / @Model.Degree (Total)</dd>
+                </div>
+            </dl>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800/50 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+            <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-4 border-b border-slate-200 dark:border-slate-700 pb-3">Instructors</h3>
+            @if (Model.Instructors.Any())
+            {
+                <ul class="space-y-4">
+                    @foreach (var instructor in Model.Instructors)
+                    {
+                        <li class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500">
+                                @instructor.Name.FirstOrDefault()
+                            </div>
+                            <span class="font-medium text-slate-800 dark:text-white">@instructor.Name</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-sm text-slate-500 dark:text-slate-400">No instructors are currently assigned to this course.</p>
+            }
+        </div>
+    </div>
+
+    <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-slate-800/50 rounded-xl shadow-md border border-slate-200 dark:border-slate-700/50">
+            <div class="p-6">
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Enrolled Trainees (@Model.CrsResults.Count)</h3>
+            </div>
+            @if (Model.CrsResults.Any())
+            {
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-700/50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Trainee Name</th>
+                                <th scope="col" class="px-6 py-3 text-center">Score</th>
+                                <th scope="col" class="px-6 py-3 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var result in Model.CrsResults)
+                            {
+                                <tr class="border-t border-slate-200 dark:border-slate-700">
+                                    <td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+                                        <a asp-controller="Trainee" asp-action="Details" asp-route-id="@result.TraineeId" class="hover:text-indigo-500 hover:underline">
+                                            @result.Trainee.Name
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">@result.Degree</td>
+                                    <td class="px-6 py-4 text-center">
+                                        @if (result.Degree >= Model.minDegree)
+                                        {
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900/50 dark:text-green-300">Passed</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-red-800 bg-red-100 rounded-full dark:bg-red-900/50 dark:text-red-300">Failed</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-10 px-6 border-t border-slate-200 dark:border-slate-700/50">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">No trainees are currently enrolled in this course.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

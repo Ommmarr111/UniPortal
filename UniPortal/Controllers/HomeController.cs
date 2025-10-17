@@ -47,6 +47,18 @@ namespace Day2MVC.Controllers
                 }).ToList();
 
             viewModel.RecentActivity = recentResults;
+            // --- NEW: Query for the Trainees by Department Chart ---
+            var traineesByDept = context.Departments
+                .Include(d => d.Trainees) // Make sure your Department model has a List<Trainee>
+                .Select(d => new DepartmentTraineeCount
+                {
+                    DepartmentName = d.Name,
+                    TraineeCount = d.Trainees.Count()
+                })
+                .OrderByDescending(d => d.TraineeCount)
+                .ToList();
+
+            viewModel.TraineesPerDepartment = traineesByDept;
 
             return View(viewModel);
         }

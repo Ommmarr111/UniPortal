@@ -7,8 +7,16 @@
         public int TotalCourses { get; set; }
         public double SuccessRate { get; set; }
         public List<RecentActivityResult> RecentActivity { get; set; } = new List<RecentActivityResult>();
-    }
 
+        // NEW: Add a property to hold data for the chart
+        public List<DepartmentTraineeCount> TraineesPerDepartment { get; set; }
+    }
+    // Helper class for the new chart data
+    public class DepartmentTraineeCount
+    {
+        public string DepartmentName { get; set; }
+        public int TraineeCount { get; set; }
+    }
     // A helper class to hold clean data for the recent activity list
     public class RecentActivityResult
     {

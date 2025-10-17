@@ -18,6 +18,26 @@ namespace Day2MVC.Controllers
             var Courses = context.Courses.ToList();
             return View("Details", Courses);
         }
+        public IActionResult ShowDetails(int id)
+        {
+            // Use .Include() to load the Department
+            // Use .Include() for Instructors
+            // Use .Include() and .ThenInclude() to get CrsResults AND the Trainee's name
+            var course = context.Courses
+                .Include(c => c.Department)
+                .Include(c => c.Instructors)
+                .Include(c => c.CrsResults)
+                    .ThenInclude(cr => cr.Trainee)
+                .FirstOrDefault(c => c.Id == id);
+
+            // It's also good practice to handle cases where the ID is not found
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View("ShowDetails", course);
+        }
         public IActionResult Index(string searchString, int? departmentId, int? page)
         {
             // --- For the Filter Dropdown ---
